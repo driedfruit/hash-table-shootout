@@ -1,7 +1,21 @@
+/*
+    This Perl version is modeled after the Python one.
+    I also reproduced the "ignore-value-just-pass-zero" optimization
+    that the Python version seems to follow.
+
+    This may seem to advantage Python (and thus Perl), and it is
+    in fact IMO, but OTOH, the Google sparse/dense hash maps or
+    anything C/C++ based has the enormous advantage of using the
+    native types, without having to pass through a PyObject or
+    a Perl SV.
+
+    So, fair enough?   Cosimo, 01/Apr/2010
+*/
+
 #include <EXTERN.h>
 #include <perl.h>
 
-typedef HV * hash_t; /* required for template.c */
+typedef HV * hash_t;
 static PerlInterpreter *my_perl;
 static SV * perl_int_key;
 static SV * perl_int_value;
