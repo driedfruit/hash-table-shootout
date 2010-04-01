@@ -1,4 +1,4 @@
-all: build build/glib_hash_table build/stl_unordered_map build/boost_unordered_map build/google_sparse_hash_map build/google_dense_hash_map build/qt_qhash build/python_dict build/ruby_hash
+all: build build/glib_hash_table build/stl_unordered_map build/boost_unordered_map build/google_sparse_hash_map build/google_dense_hash_map build/qt_qhash build/perl_hash build/python_dict build/ruby_hash
 
 build:
 	mkdir build
@@ -20,6 +20,9 @@ build/google_dense_hash_map: src/google_dense_hash_map.cc Makefile src/template.
 
 build/qt_qhash: src/qt_qhash.cc Makefile src/template.c
 	g++ -O2 -lm `pkg-config --cflags --libs QtCore` src/qt_qhash.cc -o build/qt_qhash
+
+build/perl_hash: src/perl_hash.c Makefile src/template.c
+	gcc -O2 -lm -I/usr/lib/perl/5.10.0/CORE -lperl src/perl_hash.c -o build/perl_hash
 
 build/python_dict: src/python_dict.c Makefile src/template.c
 	gcc -O2 -lm -I/usr/include/python2.6 -lpython2.6 src/python_dict.c -o build/python_dict

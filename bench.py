@@ -7,6 +7,7 @@ programs = [
     'google_sparse_hash_map',
     'google_dense_hash_map',
     'qt_qhash',
+    'perl_hash',
     'python_dict',
     'ruby_hash',
 ]

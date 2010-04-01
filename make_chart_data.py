@@ -44,6 +44,7 @@ proper_names = {
     'google_dense_hash_map': 'Google sparsehash 1.5.2 dense_hash_map',
     'glib_hash_table': 'Glib 2.22 GHashTable',
     'qt_qhash': 'Qt 4.5 QHash',
+    'perl_hash': 'Perl 5.10 (C API) hash',
     'python_dict': 'Python 2.6 (C API) dict',
     'ruby_hash': 'Ruby 1.9 (C API) Hash',
 }
@@ -55,6 +56,7 @@ program_slugs = [
     'google_dense_hash_map',
     'stl_unordered_map',
     'boost_unordered_map',
+    'perl_hash',
     'python_dict',
     'ruby_hash',
     'glib_hash_table',
