@@ -25,4 +25,4 @@ build/ruby_hash: src/ruby_hash.c Makefile src/template.c
 	gcc -O2 -lm -I/usr/lib/ruby/1.8/i586-linux/ -lruby src/ruby_hash.c -o build/ruby_hash
 
 build/perl5_hash: src/perl5_hash.c Makefile src/template.c
-	gcc -O2 -lm -I/usr/lib/perl5/5.10.1/i386-linux-thread-multi/CORE/ -lperl src/perl5_hash.c -o build/perl5_hash
+	gcc -ggdb -O2 -lm -I/usr/lib/perl5/5.10.1/i386-linux-thread-multi/CORE/ -L/usr/lib/perl5/5.10.1/i386-linux-thread-multi/CORE/ -lperl src/perl5_hash.c -o build/perl5_hash
