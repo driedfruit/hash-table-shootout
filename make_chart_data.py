@@ -73,34 +73,12 @@ for i, (benchtype, programs) in enumerate(by_benchtype.items()):
             maxes[ axisX ] = max( maxes[ axisX ], nkeys ) #if there's a more
             maxes[ axisY ] = max( maxes[ axisY ], value ) #pythonesqe way,tell me
 
-# pick correct granularity for millions, thousands, ..., etc numbers of keys
-tick_divide_by = 1000000
-tick_divide_attr = 'M'
-sizes = { 1000000: 'M', 100000: '00K', 10000: '0K', 1000: 'K', 100: '00', 1: '' }
-for i, (divider, attr) in enumerate(sizes.items()):
-    if (maxes[ 'keys' ] / divider > 0):
-        tick_divide_by = divider
-        tick_divide_attr = attr
-        break 
-# output it in a rather ugly way
 print """
-    xaxis_settings = {
-        tickSize: %d,
-        tickFormatter: function(num, obj) { return parseInt(num/%d) + '%s'; }
-    };
-
-    yaxis_runtime_settings = {
-        tickSize: %0.1f,
-        tickFormatter: function(num, obj) { return num + ' sec.'; }
-    };
-
-    yaxis_memory_settings = {
-        tickSize: %d *1024*1024,
-        tickFormatter: function(num, obj) { return parseInt(num/1024/1024) + 'MiB'; }
-    };
+    xaxis_settings.tickSize = %d;
+    yaxis_runtime_settings.tickSize = %0.1f;
+    yaxis_memory_settings.tickSize = %d *1024*1024;
     """ % (
             (maxes[ 'keys' ] / 10),	# 1 tick = 1/10 of maximum keys
-            tick_divide_by,  tick_divide_attr,
             maxes[ 'time' ] , # top time is simply maximum time
             (maxes[ 'mem' ] /1024/1024)	# memory is always in MiBs
         )

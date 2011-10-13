@@ -19,6 +19,30 @@
         backgroundOpacity: 0
     };
 
+    xaxis_settings = {
+        tickSize: 5000000,
+        tickFormatter: function(val, axis) {
+            if (val > 1000000) return (val / 1000000).toFixed(axis.tickDecimals) + " M";
+		    else if (val > 1000) return (val / 1000).toFixed(axis.tickDecimals) + " K";
+		    else return val.toFixed(axis.tickDecimals);
+        }
+    };
+
+    yaxis_runtime_settings = {
+        tickSize: 10,
+        tickFormatter: function(num, obj) { return num + ' sec.'; }
+    };
+
+    yaxis_memory_settings = {
+        tickSize: 200 *1024*1024,
+        tickFormatter: function(val, axis) {
+            if (val > 1024*1024) return (val / 1024 / 1024).toFixed(axis.tickDecimals) + " MiB";
+		    else if (val > 1024) return (val / 1024).toFixed(axis.tickDecimals) + " KiB";
+		    else return val.toFixed(axis.tickDecimals) + " B";
+        }
+    };
+
+
     __CHART_DATA_GOES_HERE__
 
     runtime_settings = {
