@@ -19,4 +19,7 @@
         VALUE rb_str_key = rb_str_new2(key); /* leak */ \
         rb_hash_delete(hash, rb_str_key); \
     } while(0)
+#define HASH_IDENTIFY_SELF do { \
+        printf("Ruby 1.9 (C API) Hash\n"); \
+    } while(0)
 #include "template.c"

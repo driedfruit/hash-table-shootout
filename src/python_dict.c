@@ -18,4 +18,7 @@ typedef PyObject * hash_t;
 #define DELETE_STR_FROM_HASH(key) do { \
         PyDict_DelItemString(hash, key); \
     } while(0)
+#define HASH_IDENTIFY_SELF do { \
+        printf("Python 2.6 (C API) dict\n"); \
+    } while(0)
 #include "template.c"

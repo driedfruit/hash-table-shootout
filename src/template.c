@@ -34,7 +34,13 @@ int main(int argc, char ** argv)
 
     double before = get_time();
 
-    if(!strcmp(argv[2], "sequential"))
+    if (!strcmp(argv[2], "identify"))
+    {
+        HASH_IDENTIFY_SELF ;
+        return 0;
+    }
+
+    else if(!strcmp(argv[2], "sequential"))
     {
         for(i = 0; i < num_keys; i++)
             INSERT_INT_INTO_HASH(i, value);

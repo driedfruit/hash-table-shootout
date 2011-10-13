@@ -7,4 +7,5 @@ typedef QHash<const char *, int64_t> str_hash_t;
 #define DELETE_INT_FROM_HASH(key) hash.remove(key)
 #define INSERT_STR_INTO_HASH(key, value) str_hash.insert(key, value)
 #define DELETE_STR_FROM_HASH(key) str_hash.remove(key)
+#define HASH_IDENTIFY_SELF printf("Qt 4.5 QHash\n")
 #include "template.c"
