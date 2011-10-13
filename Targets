@@ -5,3 +5,4 @@ google_sparse_hash_map
 google_dense_hash_map
 qt_qhash
 python_dict
+ruby_hash
