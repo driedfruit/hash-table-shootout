@@ -1,25 +1,40 @@
-all: build/glib_hash_table build/stl_unordered_map build/boost_unordered_map build/google_sparse_hash_map build/google_dense_hash_map build/qt_qhash build/python_dict build/ruby_hash
+RAW_TARGETS=$(shell cat Targets YourTargets)
 
-build/glib_hash_table: src/glib_hash_table.c Makefile src/template.c
-	gcc -ggdb -O2 -lm `pkg-config --cflags --libs glib-2.0` src/glib_hash_table.c -o build/glib_hash_table
+BUILD_TARGETS=$(RAW_TARGETS:%=build/%)
 
-build/stl_unordered_map: src/stl_unordered_map.cc Makefile src/template.c
-	g++ -O2 -lm src/stl_unordered_map.cc -o build/stl_unordered_map -std=c++0x
+YOUR_RAW_TARGETS=$(shell cat YourTargets)
 
-build/boost_unordered_map: src/boost_unordered_map.cc Makefile src/template.c
-	g++ -O2 -lm src/boost_unordered_map.cc -o build/boost_unordered_map
+YOUR_BUILD_TARGETS=$(YOUR_RAW_TARGETS:%=build/%)
 
-build/google_sparse_hash_map: src/google_sparse_hash_map.cc Makefile src/template.c
-	g++ -O2 -lm src/google_sparse_hash_map.cc -o build/google_sparse_hash_map
+make:
+	@echo "*** Select a build target:"
+	@echo ""
+	@echo " all: $(BUILD_TARGETS)"
+	@echo " benchmark: (re)run a benchmark"
+	@echo " charts: make beautiful charts"
+	@echo " mine: $(YOUR_BUILD_TARGETS)"
+	@echo " my-benchmark: rebuild Your targets and (re)run a benchmark"
 
-build/google_dense_hash_map: src/google_dense_hash_map.cc Makefile src/template.c
-	g++ -O2 -lm src/google_dense_hash_map.cc -o build/google_dense_hash_map
+all: $(BUILD_TARGETS)
 
-build/qt_qhash: src/qt_qhash.cc Makefile src/template.c
-	g++ -O2 -lm `pkg-config --cflags --libs QtCore` src/qt_qhash.cc -o build/qt_qhash
+clean:
+	rm $(BUILD_TARGETS)
 
-build/python_dict: src/python_dict.c Makefile src/template.c
-	gcc -O2 -lm -I/usr/include/python2.6 -lpython2.6 src/python_dict.c -o build/python_dict
+output: $(BUILD_TARGETS)
+	python bench.py
 
-build/ruby_hash: src/ruby_hash.c Makefile src/template.c
-	gcc -O2 -lm -I/usr/include/ruby-1.9.0 -I /usr/include/ruby-1.9.0/x86_64-linux -lruby1.9 src/ruby_hash.c -o build/ruby_hash
+charts: output
+	python make_chart_data.py < output | python make_html.py
+
+benchmark:
+	rm -f output
+	make output
+
+mine: $(YOUR_BUILDS)
+
+my-benchmark:
+	@rm $(YOUR_BUILD_TARGETS) output
+	make $(YOUR_BUILD_TARGETS)
+	make charts
+
+include Makefile.rules
