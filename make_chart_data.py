@@ -48,18 +48,9 @@ proper_names = {
     'ruby_hash': 'Ruby 1.9 (C API) Hash',
 }
 
-# do them in the desired order to make the legend not overlap the chart data
-# too much
-program_slugs = [
-    'google_sparse_hash_map',
-    'google_dense_hash_map',
-    'stl_unordered_map',
-    'boost_unordered_map',
-    'python_dict',
-    'ruby_hash',
-    'glib_hash_table',
-    'qt_qhash',
-]
+# sort programs in the desired order inside the 'Targets' file to 
+# make the legend not overlap the chart data too much
+program_slugs = [ line.strip() for line in open('Targets', 'r') if line.strip() ]
 
 chart_data = {}
 

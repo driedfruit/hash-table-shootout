@@ -1,15 +1,6 @@
 import sys, os, subprocess, signal
 
-programs = [
-    'glib_hash_table',
-    'stl_unordered_map',
-    'boost_unordered_map',
-    'google_sparse_hash_map',
-    'google_dense_hash_map',
-    'qt_qhash',
-    'python_dict',
-    'ruby_hash',
-]
+programs = [ line.strip() for line in open('Targets', 'r') if line.strip() ]
 
 minkeys  =  2*1000*1000
 maxkeys  = 40*1000*1000
