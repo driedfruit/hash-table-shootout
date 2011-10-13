@@ -89,7 +89,7 @@ tick_divide_attr = 'M'
 sizes = { 1000000: 'M', 100000: '00K', 10000: '0K', 1000: 'K', 100: '00', 1: '' }
 for i, (divider, attr) in enumerate(sizes.items()):
     if (maxes[ 'keys' ] / divider > 0):
-        tick_divide_by = divider / 100
+        tick_divide_by = divider
         tick_divide_attr = attr
         break 
 # output it in a rather ugly way
