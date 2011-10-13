@@ -27,7 +27,14 @@ lines = [ line.strip() for line in sys.stdin if line.strip() ]
 
 by_benchtype = {}
 
+proper_names = {}
+
 for line in lines:
+    if (line.startswith("identify")):
+        benchtype, program, proper_name = line.split(',')
+        proper_names[ program ] = proper_name
+        continue
+
     benchtype, nkeys, program, nbytes, runtime = line.split(',')
     nkeys = int(nkeys)
     nbytes = int(nbytes)
@@ -36,17 +43,6 @@ for line in lines:
     by_benchtype.setdefault("%s-runtime" % benchtype, {}).setdefault(program, []).append([nkeys, runtime])
     if benchtype.startswith('sequential'):
         by_benchtype.setdefault("%s-memory"  % benchtype, {}).setdefault(program, []).append([nkeys, nbytes])
-
-proper_names = {
-    'boost_unordered_map': 'Boost 1.38 unordered_map',
-    'stl_unordered_map': 'GCC 4.4 std::unordered_map',
-    'google_sparse_hash_map': 'Google sparsehash 1.5.2 sparse_hash_map',
-    'google_dense_hash_map': 'Google sparsehash 1.5.2 dense_hash_map',
-    'glib_hash_table': 'Glib 2.22 GHashTable',
-    'qt_qhash': 'Qt 4.5 QHash',
-    'python_dict': 'Python 2.6 (C API) dict',
-    'ruby_hash': 'Ruby 1.9 (C API) Hash',
-}
 
 # sort programs in the desired order inside the 'Targets' file to 
 # make the legend not overlap the chart data too much
@@ -58,6 +54,9 @@ maxes = { 'time': 0.0, 'keys': 0, 'mem': 0 }
 for i, (benchtype, programs) in enumerate(by_benchtype.items()):
     chart_data[benchtype] = []
     for j, program in enumerate(program_slugs):
+        if not proper_names.has_key(program):
+        	proper_names[program] = program
+
         data = programs[program]
         chart_data[benchtype].append({
             'label': proper_names[program],

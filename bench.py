@@ -23,6 +23,12 @@ if len(sys.argv) > 1:
 else:
     benchtypes = ('sequential', 'random', 'delete', 'sequentialstring', 'randomstring', 'deletestring')
 
+for program in programs:
+    proc = subprocess.Popen(['./build/'+program, '10', 'identify'], stdout=subprocess.PIPE)
+    identify_data = "identify,"+program+","+proc.stdout.read().strip()
+    print >> outfile, identify_data 
+    print identify_data
+
 for benchtype in benchtypes:
     nkeys = minkeys
     while nkeys <= maxkeys:
