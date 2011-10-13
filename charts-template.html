@@ -14,25 +14,12 @@
 
     grid_settings = { tickColor: '#ddd' };
 
-    xaxis_settings = {
-        tickSize: 5000000,
-        tickFormatter: function(num, obj) { return parseInt(num/1000000) + 'M'; }
-    };
-
-    yaxis_runtime_settings = {
-        tickSize: 10,
-        tickFormatter: function(num, obj) { return num + ' sec.'; }
-    };
-
-    yaxis_memory_settings = {
-        tickSize: 200*1024*1024,
-        tickFormatter: function(num, obj) { return parseInt(num/1024/1024) + 'MiB'; }
-    };
-
     legend_settings = {
         position: 'nw',
         backgroundOpacity: 0
     };
+
+    __CHART_DATA_GOES_HERE__
 
     runtime_settings = {
         series: series_settings,
@@ -49,8 +36,6 @@
         yaxis: yaxis_memory_settings,
         legend: legend_settings
     };
-
-    __CHART_DATA_GOES_HERE__
 
     $(function () {
         $.plot($("#sequential-runtime"), chart_data['sequential-runtime'], runtime_settings);

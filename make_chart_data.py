@@ -63,6 +63,7 @@ program_slugs = [
 
 chart_data = {}
 
+maxes = { 'time': 0.0, 'keys': 0, 'mem': 0 }
 for i, (benchtype, programs) in enumerate(by_benchtype.items()):
     chart_data[benchtype] = []
     for j, program in enumerate(program_slugs):
@@ -72,7 +73,46 @@ for i, (benchtype, programs) in enumerate(by_benchtype.items()):
             'data': [],
         })
 
+        axisX = 'keys'
+        axisY = 'time'
+        if benchtype.endswith('memory'):
+            axisY = 'mem'
+
         for k, (nkeys, value) in enumerate(data):
             chart_data[benchtype][-1]['data'].append([nkeys, value])
+            maxes[ axisX ] = max( maxes[ axisX ], nkeys ) #if there's a more
+            maxes[ axisY ] = max( maxes[ axisY ], value ) #pythonesqe way,tell me
+
+# pick correct granularity for millions, thousands, ..., etc numbers of keys
+tick_divide_by = 1000000
+tick_divide_attr = 'M'
+sizes = { 1000000: 'M', 100000: '00K', 10000: '0K', 1000: 'K', 100: '00', 1: '' }
+for i, (divider, attr) in enumerate(sizes.items()):
+    if (maxes[ 'keys' ] / divider > 0):
+        tick_divide_by = divider / 100
+        tick_divide_attr = attr
+        break 
+# output it in a rather ugly way
+print """
+    xaxis_settings = {
+        tickSize: %d,
+        tickFormatter: function(num, obj) { return parseInt(num/%d) + '%s'; }
+    };
+
+    yaxis_runtime_settings = {
+        tickSize: %0.1f,
+        tickFormatter: function(num, obj) { return num + ' sec.'; }
+    };
+
+    yaxis_memory_settings = {
+        tickSize: %d *1024*1024,
+        tickFormatter: function(num, obj) { return parseInt(num/1024/1024) + 'MiB'; }
+    };
+    """ % (
+            (maxes[ 'keys' ] / 10),	# 1 tick = 1/10 of maximum keys
+            tick_divide_by,  tick_divide_attr,
+            maxes[ 'time' ] , # top time is simply maximum time
+            (maxes[ 'mem' ] /1024/1024)	# memory is always in MiBs
+        )
 
 print 'chart_data = ' + json.dumps(chart_data)
