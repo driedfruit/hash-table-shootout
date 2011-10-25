@@ -20,6 +20,8 @@ static PerlInterpreter *my_perl;
 static SV * perl_int_key;
 static SV * perl_int_value;
 
+#define HASH_IDENTIFY_SELF printf("perl " PERL_VERSION_STRING " HV hash");
+
 #define SETUP \
     my_perl = perl_alloc(); \
     perl_construct(my_perl); \
