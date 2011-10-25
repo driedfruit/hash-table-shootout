@@ -23,4 +23,4 @@ build/ruby_hash: src/ruby_hash.c Makefile.rules src/template.c
 	gcc -O2 -lm -I/usr/include/ruby-1.9.0 -I /usr/include/ruby-1.9.0/x86_64-linux -lruby1.9 src/ruby_hash.c -o $@
 
 build/perl_hash: src/perl_hash.c Makefile src/template.c
-	gcc -O2 -lm -I/usr/lib/perl5/5.12.2/i686-linux/CORE -lperl src/perl_hash.c -o build/perl_hash
+	gcc -O2 -lm `perl -MExtUtils::Embed -e ccopts` `perl -MExtUtils::Embed -e ldopts` src/perl_hash.c -o $@
