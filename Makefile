@@ -23,7 +23,6 @@ all: build $(BUILD_TARGETS)
 clean:
 	rm $(BUILD_TARGETS)
 
-<<<<<<< HEAD
 output: $(BUILD_TARGETS)
 	python bench.py
 
