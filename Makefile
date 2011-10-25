@@ -15,7 +15,10 @@ make:
 	@echo " mine: $(YOUR_BUILD_TARGETS)"
 	@echo " my-benchmark: rebuild Your targets and (re)run a benchmark"
 
-all: $(BUILD_TARGETS)
+build:
+	mkdir build
+
+all: build $(BUILD_TARGETS)
 
 clean:
 	rm $(BUILD_TARGETS)
